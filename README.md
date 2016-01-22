@@ -14,6 +14,7 @@ sudo ./nginx -p /Users/name/workspace/anonymous -c conf/nginx.conf
 
 content_dispatcher
 =========================
+```lua
 local router = require 'resty.router'
 
 local rt = router:new()
@@ -22,10 +23,12 @@ rt:map('/api/hello.json', 'src.hello')
 rt:map('/api/any.json', 'src.any')
 
 rt:dispatch()
+```
 
 
 src.hello
 =========================
+```lua
 local _M = { _VERSION = '0.01' }
 
 function _M.run( ... )
@@ -34,6 +37,7 @@ function _M.run( ... )
 end
 
 return _M
+```
 
 为方便后期的代码热加载，所有目标 lua 都需要注册上版本信息， 如上 local _M = { _VERSION = '0.01' }
 
