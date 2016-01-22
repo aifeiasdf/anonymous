@@ -1,21 +1,5 @@
 module("lua.comm.config", package.seeall)
 
-WHITE = 10
-HIGH_WHITE = 20
-GRAY_WHITE = 30
-GRAY = 40
-LOW_S = 50 -- low suspicious
-HIGH_S = 60 -- high suspicious
-BLACK = 70
-
-LEAK_DOWNLOAD_FAIL = 12
-LEAK_REPIRE_OK = 0
-LEAK_REPIRED = 1
-
-HOST_WHITE = 1
-HOST_GRAY = 0
-HOST_BLACK = -1
-
 
 NGX_DIC_NETSTAT = '#?_netstat#'
 NGX_DIC_SQL		= '#?_SQL#'

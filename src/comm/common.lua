@@ -1,7 +1,6 @@
 module("lua.comm.common", package.seeall)
 local config = require "lua.comm.config"
 local json   = require(require("ffi").os=="Windows" and "resty.dkjson" or "cjson")
-local zlib   = require "lua.comm.zlib"
 local lock   = require "resty.lock"
 
 function parse_cloud_query(data)
@@ -695,14 +694,6 @@ function safe_read_body(  )
             ngx.exit(400) -- 重复包
           end
         end
-
-        -- local aes_128_cbc_md5 = aes:new("96323AE92F544122")
-        -- data = aes_128_cbc_md5:decrypt(data)
-        --
-        -- local a, b, c, d = string.byte(data, 1, 4)
-        -- local len = tonumber(string.format("%02x", a) .. string.format("%02x", b) ..
-        --                         string.format("%02x", c) .. string.format("%02x", d), 16)
-        -- data = zlib.uncompress(data:sub(5, -1), len)
 
         if nil == data then
           ngx.log(ngx.WARN, "uncompress data failed")
