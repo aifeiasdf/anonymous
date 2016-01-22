@@ -1,5 +1,5 @@
 -- Copyright (C) 2014 wang "membphis" 
-local common     = require "src.comm.common"
+local common     = require "lua.comm.common"
 local beanstalkd = require 'resty.beanstalkd'
 local json   = require(require("ffi").os=="Windows" and "resty.dkjson" or "cjson")
 

@@ -52,6 +52,11 @@ TODO LIST
 
 
 
+OpenResty 下载和安装参考
+====================
+http://openresty.org/
+
+
 
 
 

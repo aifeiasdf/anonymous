@@ -1,4 +1,4 @@
-local common    = require "lua.comm.common"
+local common    = require "src.comm.common"
 local redis_c   = require "resty.redis"
 local json      = require(require("ffi").os=="Windows" and "resty.dkjson" or "cjson")
 local win_platform = require("ffi").os == "Windows"
