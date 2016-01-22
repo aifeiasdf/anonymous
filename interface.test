@@ -1,0 +1,15 @@
+
+examples of test interface：
+
+curl ip:port/uri/location.json?mid=00025f1c894e44081a12867ad370f1c3 -d '{
+    "task_id": 311,
+    "result": {
+        "type": 1600,
+        "id": 307,src
+        "code": 1,
+        "detail": {
+            "vcnt": 3
+        }
+    }
+}'
+
