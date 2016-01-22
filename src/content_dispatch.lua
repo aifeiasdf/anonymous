@@ -1,4 +1,8 @@
 
 local router = require 'resty.router'
 
-ngx.say("hello anonymous")
+local rt = router:new()
+
+rt:map('/api/hello.json', 'src.hello')
+
+rt:dispatch()

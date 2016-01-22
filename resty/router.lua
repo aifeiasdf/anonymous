@@ -48,15 +48,13 @@ function _M.dispatch( self )
     end
 end
 
-function _M.add( self, item )
+function _M.map( self, uri, pack )
     -- body
     local router = self.router
 
     if nil == router then
         error('router internal error') -- can not happen
     end
-    
-    local uri, pack = item.uri, item.pack
 
     router[uri] = pack  -- assign or cover
 end
