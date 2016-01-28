@@ -28,14 +28,14 @@ function _M.dispatch( self )
         return self.default(self)        
     end
 
-    if not shared then
+    if not shared or not opt then
         return (require (router[uri])).run()
     end
 
     -- version replace
     local package = (require (router[uri]))
 
-    if package.version == shared:get(uri) then
+    if package._VERSION == shared:get(router[uri]) then
         return package.run()
     else
         local code_chunk = opt.func(opt)
@@ -48,6 +48,10 @@ function _M.dispatch( self )
     end
 end
 
+function _M.update( self, uri, module, version )
+    -- body
+end
+
 function _M.map( self, uri, pack )
     -- body
     local router = self.router
@@ -57,20 +61,6 @@ function _M.map( self, uri, pack )
     end
 
     router[uri] = pack  -- assign or cover
-end
-
-function _M.update()
-    
-end
-
-function _M.reload( self )
-    -- body
-    local shared = self.shared
-
-    if not shared then
-        return false, 'reload disabled'
-    end
-
 end
 
 function _M.setdefault( self, func )
