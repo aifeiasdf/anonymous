@@ -29,19 +29,30 @@ function _M.dispatch( self )
     end
 
     if not shared or not opt then
+        -- ngx.log(ngx.ERR, "shared=", type(shared), " opt=", type(opt))
         return (require (router[uri])).run()
     end
 
     -- version replace
-    local package = (require (router[uri]))
+    local _module = router[uri]
+    local _pack = (require (_module))
+    local version = shared:get(_module)
 
-    if package._VERSION == shared:get(router[uri]) then
-        return package.run()
+    if _pack._VERSION == version then
+        ngx.log(ngx.ERR, "herer1")
+        return _pack.run()
     else
         local code_chunk = opt.func(opt)
         if pcall(loadstring(code_chunk)) then
-            package.loaded[router[uri]] = loadstring(code_chunk) -- maybe wrong here
-            return (require (router[uri])).run()
+            shared:set(_module, version)
+            package.loaded[_module] = loadstring(code_chunk)() -- maybe wrong here
+            local str = ''
+            for k, v in pairs(package.loaded[_module]) do
+                str = str .. k .. '  ' .. type(v) .. '\r\n'
+            end
+            ngx.log(ngx.ERR, str)
+            -- ngx.log(ngx.ERR, "xman=", package.loaded[_module]._VERSION)
+            return (require (_module)).run()
         else 
             error("loadstring error, wrong lua code loaded")
         end
