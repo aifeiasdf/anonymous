@@ -1,5 +1,9 @@
+
+local lru_cache    = require ''
 local setmetatable = setmetatable
 local var          = ngx.var
+
+
 
 local _M = { _VERSION = '0.01' }
 
@@ -29,7 +33,6 @@ function _M.dispatch( self )
     end
 
     if not shared or not opt then
-        -- ngx.log(ngx.ERR, "shared=", type(shared), " opt=", type(opt))
         local tmp = require (router[uri])
         return tmp.run()
     end
@@ -39,16 +42,13 @@ function _M.dispatch( self )
     local _pack = (require (_module))
     local version = shared:get(_module)
 
-    -- ngx.log(ngx.ERR, "module = " .. _module .. "  stored version = ".. tostring(version) .. "   pack versoin = " .. _pack._VERSION)
     if _pack._VERSION == version then
-        -- ngx.log(ngx.ERR, "herer1")
         return _pack.run()
     else
         local code_chunk = opt.func(opt)
         if pcall(loadstring(code_chunk)) then
-            shared:set(_module, _pack._VERSION)
+            -- shared:set(_module, _pack._VERSION)
             package.loaded[_module] = loadstring(code_chunk)() -- maybe wrong here
-            -- ngx.log(ngx.ERR, "xman=", package.loaded[_module]._VERSION)
             return (require (_module)).run()
         else 
             error("loadstring error, wrong lua code loaded")
