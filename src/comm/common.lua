@@ -1,5 +1,5 @@
-module("lua.comm.common", package.seeall)
-local config = require "lua.comm.config"
+module("src.comm.common", package.seeall)
+local config = require "src.comm.config"
 local json   = require(require("ffi").os=="Windows" and "resty.dkjson" or "cjson")
 local lock   = require "resty.lock"
 
@@ -761,7 +761,7 @@ function delay_commit( key, msec, fn_push, chan, type )
 end
 
 -- to prevent use of casual module global variables
-getmetatable(lua.comm.common).__newindex = function (table, key, val)
+getmetatable(src.comm.common).__newindex = function (table, key, val)
     error('attempt to write to undeclared variable "' .. key .. '": '
             .. debug.traceback())
 end

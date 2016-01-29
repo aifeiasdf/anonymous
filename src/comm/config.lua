@@ -1,4 +1,4 @@
-module("lua.comm.config", package.seeall)
+module("src.comm.config", package.seeall)
 
 
 NGX_DIC_NETSTAT = '#?_netstat#'

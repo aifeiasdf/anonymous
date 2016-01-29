@@ -30,7 +30,8 @@ function _M.dispatch( self )
 
     if not shared or not opt then
         -- ngx.log(ngx.ERR, "shared=", type(shared), " opt=", type(opt))
-        return (require (router[uri])).run()
+        local tmp = require (router[uri])
+        return tmp.run()
     end
 
     -- version replace
@@ -38,19 +39,15 @@ function _M.dispatch( self )
     local _pack = (require (_module))
     local version = shared:get(_module)
 
+    -- ngx.log(ngx.ERR, "module = " .. _module .. "  stored version = ".. tostring(version) .. "   pack versoin = " .. _pack._VERSION)
     if _pack._VERSION == version then
-        ngx.log(ngx.ERR, "herer1")
+        -- ngx.log(ngx.ERR, "herer1")
         return _pack.run()
     else
         local code_chunk = opt.func(opt)
         if pcall(loadstring(code_chunk)) then
-            shared:set(_module, version)
+            shared:set(_module, _pack._VERSION)
             package.loaded[_module] = loadstring(code_chunk)() -- maybe wrong here
-            local str = ''
-            for k, v in pairs(package.loaded[_module]) do
-                str = str .. k .. '  ' .. type(v) .. '\r\n'
-            end
-            ngx.log(ngx.ERR, str)
             -- ngx.log(ngx.ERR, "xman=", package.loaded[_module]._VERSION)
             return (require (_module)).run()
         else 
