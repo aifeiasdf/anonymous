@@ -20,6 +20,9 @@ local opt = { func = get_code }
 local rt = router:new(cache, opt)
 -- local rt = router:new()
 
-rt:map('/api/hello.json', 'src.hello', opt)
+rt:map('/api/hello.json', 'src.hello')
+
+rt:reload('/api/update.json')
+
 
 rt:dispatch()
