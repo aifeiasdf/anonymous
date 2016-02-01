@@ -9,10 +9,8 @@ local red = redis:new()
 
 local function get_code(opt)
     -- body
-
     local s, err = red:get("aifei")
     return s
-
 end
 
 local opt = { func = get_code }

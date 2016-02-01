@@ -57,11 +57,16 @@ function _M.dispatch( self )
     end
 
     -- version replace
-    local _module = router[uri]
-    local _pack = (require (_module))
-    local _ver = shared:get(_module)
+    local _module   = router[uri]
+    local _pack     = (require (_module))
+    local _ver, err = shared:get(_module)
 
-    if _pack._VERSION == _ver then
+    if err then
+        ngx.log(ngx.WARN, "get moduel ", _module, " version from shared err, err = ", err) 
+    end
+
+    ngx.log(ngx.ERR, _ver)
+    if not _ver or _pack._VERSION == _ver then
         return _pack.run()
     else
         local code_chunk = opt.func(opt)
