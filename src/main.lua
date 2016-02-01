@@ -20,6 +20,6 @@ local rt = router:new()
 
 rt:map('/api/hello.json', 'src.hello')
 
-rt:reload('/api/update.json')
+-- rt:reload('/api/update.json')
 
 rt:dispatch()

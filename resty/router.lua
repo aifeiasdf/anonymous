@@ -18,9 +18,17 @@ end
 
 _M.default = default
 
-local function _reload( self, mod_map )
+local function _reload( self )
     -- body
-    local shared = self.shared
+    ngx.req.read_body()
+    
+    local mod_map = common.json_decode(ngx.req.get_body_data())
+
+    if not mod_map then
+        return ngx.log(ngx.ERR, "post wrong json format body.")
+    end
+
+    local shared = self.shared‘
 
     for mod, version in pairs(mod_map) do
         shared:set(mod, version)
@@ -37,21 +45,15 @@ function _M.dispatch( self )
     local reload_uri = self.reload_uri
 
     if reload_uri == uri then
-        ngx.req.read_body()
-        local mod_map = common.json_decode(ngx.req.get_body_data())
-
-        if not mod_map then
-            return ngx.log(ngx.ERR, "post wrong json format body.")
-        end
-
-        return _reload(self, mod_map)
+        return _reload(self)
     end
 
     if nil == router[uri] then
         return self.default(self)        
     end
 
-    if not shared or not opt then
+    -- 缓存、opt和重载uri地址
+    if not shared or not opt or self.reload_uri then  
         local tmp = require (router[uri])
         return tmp.run()
     end
