@@ -69,7 +69,7 @@ function _M.dispatch( self )
     if not _ver or _pack._VERSION == _ver then
         return _pack.run()
     else
-        local code_chunk = opt.func(opt)
+        local code_chunk = opt.func(opt, _module)
         if pcall(loadstring(code_chunk)) then
             package.loaded[_module] = loadstring(code_chunk)()
             return (require (_module)).run()
