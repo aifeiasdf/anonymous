@@ -46,6 +46,9 @@ redis 访问
 =======
 redis的地址和端口设置在 conf/ngx_main_config.json 
 
+
+other
+=======
 在 resty 和 src common 文件夹下有许多好用的resty包或者封装好的函数等你去发现。
 
 TODO LIST
