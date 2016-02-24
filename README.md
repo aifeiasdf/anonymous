@@ -42,6 +42,10 @@ return _M
 为方便后期的代码热加载，所有目标 lua 都需要注册上版本信息， 如上 local _M = { _VERSION = '0.01' }
 
 
+redis 访问
+=======
+redis的地址和端口设置在 conf/ngx_main_config.json 
+
 在 resty 和 src common 文件夹下有许多好用的resty包或者封装好的函数等你去发现。
 
 TODO LIST
