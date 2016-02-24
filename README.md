@@ -12,7 +12,7 @@ sudo ./nginx -p /Users/name/workspace/anonymous -c conf/nginx.conf
 工程的默认入口是一个 resty-router[https://github.com/aifeiasdf/lua-resty-router]
 
 
-content_dispatcher
+main.lua
 =========================
 ```lua
 local router = require 'resty.router'
